@@ -1,0 +1,34 @@
+server:
+  port: 8585
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/bankapp
+    username: root
+    password: admin
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  mail:
+    default-encoding: UTF-8
+    host: smtp.gmail.com
+    port: 465
+    username: nikita.parmar721@gmail.com
+    password: nzzysirmrzxfahpo
+    properties:
+      mail:
+        debug: false
+        protocol: smtp
+        smtp:
+          ssl:
+            enable: true
+            trust: "*"
+          auth: true
+          starttls:
+            enable: true
+            required: false
+
+#nzzy sirm rzxf ahpo
