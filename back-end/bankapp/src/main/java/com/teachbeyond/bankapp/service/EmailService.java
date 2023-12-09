@@ -4,4 +4,6 @@ import com.teachbeyond.bankapp.dto.EmailDetails;
 
 public interface EmailService {
     void sendEmailAlert(EmailDetails emailDetails);
+
+    void sendEmailWithTransactionAttachment(EmailDetails emailDetails);
 }
