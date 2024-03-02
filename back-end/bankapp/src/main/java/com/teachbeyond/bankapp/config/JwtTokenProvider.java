@@ -32,8 +32,10 @@ public class JwtTokenProvider {
                 .setExpiration(expireDate)
                 .signWith(key())
                 .compact();
+
+
     }
- 
+
     public String getUsername(String token) {
         Claims claims = Jwts.parserBuilder()
                 .setSigningKey(key())
