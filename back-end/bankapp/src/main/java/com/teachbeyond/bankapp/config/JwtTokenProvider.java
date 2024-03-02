@@ -33,12 +33,7 @@ public class JwtTokenProvider {
                 .signWith(key())
                 .compact();
     }
-
-    private Key key() {
-        byte[] bytes = Decoders.BASE64.decode(jwtSecret);
-        return Keys.hmacShaKeyFor(bytes);
-    }
-
+ 
     public String getUsername(String token) {
         Claims claims = Jwts.parserBuilder()
                 .setSigningKey(key())
@@ -47,6 +42,12 @@ public class JwtTokenProvider {
                 .getBody();
         return claims.getSubject();
     }
+
+    private Key key() {
+        byte[] bytes = Decoders.BASE64.decode(jwtSecret);
+        return Keys.hmacShaKeyFor(bytes);
+    }
+
 
     public boolean validateToken(String token) {
         try {
