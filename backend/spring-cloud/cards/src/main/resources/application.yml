@@ -20,8 +20,20 @@ spring:
     show-sql: true
   config:
     import: "optional:configserver:http://localhost:8071/"
-#      - "application_qa.yml"
-#      - "application_prod.yml"
+  #      - "application_qa.yml"
+  #      - "application_prod.yml"
+  rabbitmq:
+    host: "localhost"
+    port: 5672
+    username: "guest"
+    password: "guest"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
 #build:
 #  version: "3.0"
 #cards:
