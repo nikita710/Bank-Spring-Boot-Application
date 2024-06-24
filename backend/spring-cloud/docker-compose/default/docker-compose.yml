@@ -9,8 +9,8 @@ services:
       test: rabbitmq-diagnostics check_port_connectivity
       interval: 10s
       timeout: 5s
-      retries: 10
-      start_period: 10s
+      retries: 5
+      start_period: 5s
     extends:
       file: common-config.yml
       service: network-deploy-service
@@ -27,7 +27,7 @@ services:
       test: "curl --fail --silent localhost:8071/actuator/health/readiness | grep UP || exit 1"
       interval: 10s
       timeout: 5s
-      retries: 10
+      retries: 5
       start_period: 10s
     extends:
       file: common-config.yml
@@ -40,7 +40,7 @@ services:
       - "8080:8080"
     depends_on:
       configserver:
-        condition: service_completed_successfully
+        condition: service_healthy
     environment:
       SPRING_APPLICATION_NAME: "accounts"
     extends:
@@ -54,7 +54,7 @@ services:
       - "8090:8090"
     depends_on:
       configserver:
-        condition: service_completed_successfully
+        condition: service_healthy
     environment:
       SPRING_APPLICATION_NAME: "loans"
     extends:
@@ -68,7 +68,7 @@ services:
       - "9000:9000"
     depends_on:
       configserver:
-        condition: service_completed_successfully
+        condition: service_healthy
     environment:
       SPRING_APPLICATION_NAME: "cards"
     extends:
