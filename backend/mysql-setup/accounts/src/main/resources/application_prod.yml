@@ -1,0 +1,14 @@
+spring:
+  config:
+    activate:
+      on-profile: "prod"
+build:
+  version: "3.0"
+cards:
+  message: "Welcome to MyBank accounts related prod APIs"
+  contactDetails:
+    name: "Reine Ray - Product Owner"
+    email: "reineay@eazybank.com"
+  onCallSupport:
+    - (444) 555-1234
+    - (444) 523-1345
