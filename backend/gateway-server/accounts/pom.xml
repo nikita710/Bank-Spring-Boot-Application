@@ -104,9 +104,6 @@
                 <artifactId>jib-maven-plugin</artifactId>
                 <version>3.4.2</version>
                 <configuration>
-                    <from>
-                        <image>openjdk:21-jdk-slim</image>
-                    </from>
                     <to>
                         <image>nikita710/${project.artifactId}:s9</image>
                     </to>

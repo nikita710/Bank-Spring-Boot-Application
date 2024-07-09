@@ -1,6 +1,6 @@
 services:
   configserver:
-    image: "nikita710/configserver:s8"
+    image: "nikita710/configserver:s9"
     container_name: configserver-ms
     ports:
       - "8071:8071"
@@ -15,28 +15,27 @@ services:
       service: microservice-base-config
 
   eurekaserver:
-    image: "nikita710/eurekaserver:s8"
+    image: "nikita710/eurekaserver:s9"
     container_name: eurekaserver-ms
     ports:
       - "8070:8070"
+    depends_on:
+      configserver:
+        condition: service_healthy
     healthcheck:
       test: "curl --fail --silent localhost:8070/actuator/health/readiness | grep UP || exit 1"
       interval: 10s
       timeout: 5s
       retries: 5
       start_period: 10s
-    depends_on:
-      configserver:
-        condition: service_healthy
     extends:
       file: common-config.yml
       service: microservice-configserver-config
     environment:
       SPRING_APPLICATION_NAME: "eurekaserver"
-      SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
 
   accounts:
-    image: "nikita710/accounts:s8"
+    image: "nikita710/accounts:s9"
     container_name: accounts-ms
     ports:
       - "8080:8080"
@@ -45,6 +44,12 @@ services:
         condition: service_healthy
       eurekaserver:
         condition: service_healthy
+    healthcheck:
+      test: "curl --fail --silent localhost:8080/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
     environment:
       SPRING_APPLICATION_NAME: "accounts"
     extends:
@@ -52,7 +57,7 @@ services:
       service: microservice-eureka-config
 
   loans:
-    image: "nikita710/loans:s8"
+    image: "nikita710/loans:s9"
     container_name: loans-ms
     ports:
       - "8090:8090"
@@ -61,21 +66,12 @@ services:
         condition: service_healthy
       eurekaserver:
         condition: service_healthy
-    environment:
-      SPRING_APPLICATION_NAME: "loans"
-    extends:
-      file: common-config.yml
-      service: microservice-eureka-config
-  loans1:
-    image: "nikita710/loans:s8"
-    container_name: loans-ms-1
-    ports:
-      - "8091:8090"
-    depends_on:
-      configserver:
-        condition: service_healthy
-      eurekaserver:
-        condition: service_healthy
+    healthcheck:
+      test: "curl --fail --silent localhost:8090/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
     environment:
       SPRING_APPLICATION_NAME: "loans"
     extends:
@@ -83,7 +79,7 @@ services:
       service: microservice-eureka-config
 
   cards:
-    image: "nikita710/cards:s8"
+    image: "nikita710/cards:s9"
     container_name: cards-ms
     ports:
       - "9000:9000"
@@ -92,12 +88,35 @@ services:
         condition: service_healthy
       eurekaserver:
         condition: service_healthy
+    healthcheck:
+      test: "curl --fail --silent localhost:9000/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
     environment:
       SPRING_APPLICATION_NAME: "cards"
     extends:
       file: common-config.yml
       service: microservice-eureka-config
 
+  gatewayserver:
+    image: "nikita710/gatewayserver:s9"
+    container_name: gatewayserver-ms
+    ports:
+      - "8072:8072"
+    depends_on:
+      accounts:
+        condition: service_healthy
+      cards:
+        condition: service_healthy
+      loans:
+        condition: service_healthy
+    environment:
+      SPRING_APPLICATION_NAME: "gatewayserver"
+    extends:
+      file: common-config.yml
+      service: microservice-eureka-config
 networks:
   mybank:
     driver: "bridge"

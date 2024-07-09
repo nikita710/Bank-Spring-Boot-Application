@@ -8,7 +8,7 @@ import java.util.List;
 
 @Component
 public class FilterUtility {
-    public static final String CORRELATION_ID = "techbeyond-correlation-id";
+    public static final String CORRELATION_ID = "eazybank-correlation-id";
 
     public String getCorrelationId(HttpHeaders requestHeaders) {
         if (requestHeaders.get(CORRELATION_ID) != null) {
@@ -23,7 +23,7 @@ public class FilterUtility {
         return exchange.mutate().request(exchange.getRequest().mutate().header(name, value).build()).build();
     }
 
-    public ServerWebExchange setCorrelationID(ServerWebExchange exchange, String correlationID) {
-        return this.setRequestHeader(exchange, CORRELATION_ID, correlationID);
+    public ServerWebExchange setCorrelationId(ServerWebExchange exchange, String correlationId) {
+        return this.setRequestHeader(exchange, CORRELATION_ID, correlationId);
     }
 }
