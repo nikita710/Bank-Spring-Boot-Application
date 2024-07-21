@@ -1,0 +1,14 @@
+spring:
+  config:
+    active:
+      on-profile: "qa"
+build:
+  version: "3.0"
+cards:
+  message: "Welcome to MyBank cards related QA APIs"
+  contactDetails:
+    name: "Smith Ray - QA Lead"
+    email: "smithay@eazybank.com"
+  onCallSupport:
+    - (666) 555-1234
+    - (666) 523-1345
